@@ -18,12 +18,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/cuhsat/wth/pkg/wth"
+	"github.com/f0x4n6/wth/pkg/wth"
 )
 
 func main() {
 	if len(os.Args) == 1 || os.Args[1] == "-h" || os.Args[1] == "--help" {
-		fmt.Fprintln(os.Stderr, "usage: wth HASHSUM")
+		_, _ = fmt.Fprintln(os.Stderr, "usage: wth HASHSUM")
 		os.Exit(2)
 	}
 
@@ -32,6 +32,6 @@ func main() {
 	go wth.Search([]byte(strings.ToLower(os.Args[1])), ch)
 
 	for m := range ch {
-		fmt.Println(m)
+		_, _ = fmt.Println(m)
 	}
 }

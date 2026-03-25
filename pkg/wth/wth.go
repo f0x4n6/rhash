@@ -1,4 +1,4 @@
-// Package wth implements the what the hash reverse lookup.
+// Package wth implements the What The Hash reverse lookup.
 package wth
 
 import (

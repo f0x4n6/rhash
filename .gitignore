@@ -25,3 +25,5 @@ bin/
 
 # MacOS crap
 .DS_Store
+
+.idea/
