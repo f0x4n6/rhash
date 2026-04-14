@@ -18,20 +18,18 @@ import (
 	"os"
 	"strings"
 
-	"go.foxforensics.dev/wth/pkg/wth"
+	"go.foxforensics.dev/wth/database"
 )
 
 func main() {
-	if len(os.Args) == 1 || os.Args[1] == "-h" || os.Args[1] == "--help" {
-		_, _ = fmt.Fprintln(os.Stderr, "usage: wth HASHSUM")
+	if len(os.Args) == 1 || os.Args[1] == "--help" {
+		_, _ = fmt.Fprintln(os.Stderr, "usage: wth hashsum")
 		os.Exit(2)
 	}
 
-	ch := make(chan string)
+	s := strings.ToLower(os.Args[1])
 
-	go wth.Search([]byte(strings.ToLower(os.Args[1])), ch)
-
-	for m := range ch {
-		_, _ = fmt.Println(m)
+	for v := range database.Lookup(s) {
+		_, _ = fmt.Println(v)
 	}
 }
