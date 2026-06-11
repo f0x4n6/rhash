@@ -2,7 +2,7 @@
 Reverse hash lookup that searches a database of 270+ hash algorithms for the possible source of the given hash sum. All found matches will be output in [hashcat](https://hashcat.net/hashcat/) notation.
 
 ```console
-go install go.foxforensics.dev/rhash@latest
+go install go.foxforensics.eu/rhash@latest
 ```
 
 ## Usage
