@@ -11,6 +11,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strings"
@@ -31,7 +32,7 @@ func main() {
 
 	s := strings.ToLower(os.Args[1])
 
-	for v := range database.Lookup(s) {
+	for v := range database.Lookup(context.Background(), s) {
 		_, _ = fmt.Println(v)
 	}
 }

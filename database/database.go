@@ -4,6 +4,7 @@
 package database
 
 import (
+	"context"
 	"strings"
 
 	"github.com/dlclark/regexp2/v2"
@@ -1022,17 +1023,21 @@ var Entries = []Entry{
 // Lookup will write the found matches into the returned channel.
 //
 // The returned channel will be closed at the end of the operation.
-func Lookup(v string) <-chan string {
+func Lookup(ctx context.Context, v string) <-chan string {
 	ch := make(chan string)
 
-	go func(chan<- string) {
+	go func() {
+		defer close(ch)
 		for _, e := range Entries {
 			if ok, _ := e.Regex.MatchString(v); ok {
-				ch <- strings.Join(e.Names, "\n")
+				select {
+				case ch <- strings.Join(e.Names, "\n"):
+				case <-ctx.Done():
+					return
+				}
 			}
 		}
-		close(ch)
-	}(ch)
+	}()
 
 	return ch
 }

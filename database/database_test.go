@@ -1,13 +1,14 @@
 package database
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"testing"
 )
 
 func Example() {
-	for v := range Lookup("1234567890abcd") {
+	for v := range Lookup(context.Background(), "1234567890abcd") {
 		fmt.Println(v)
 	}
 
@@ -52,7 +53,9 @@ func TestLookup(t *testing.T) {
 		},
 	} {
 		t.Run("Test Lookup "+tt.name, func(t *testing.T) {
-			for a := range Lookup(tt.data) {
+			ctx := context.Background()
+
+			for a := range Lookup(ctx, tt.data) {
 				if strings.Contains(a, tt.name) {
 					return
 				}
@@ -64,9 +67,11 @@ func TestLookup(t *testing.T) {
 }
 
 func BenchmarkLookup(b *testing.B) {
+	ctx := context.Background()
+
 	b.Run("Benchmark Lookup", func(b *testing.B) {
 		for n := 0; n < b.N; n++ {
-			for range Lookup("") {
+			for range Lookup(ctx, "8743b52063cd84097a65d1633f5c74f5") {
 			}
 		}
 	})
